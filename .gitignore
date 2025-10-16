@@ -1,0 +1,27 @@
+# Simulation outputs
+*.vcd
+*.fst
+*.vpd
+*.fsdb
+*.out
+*.log
+
+# Tool artifacts
+*.daidir/
+*simv*
+*.key
+
+# Synthesis outputs
+*.ddc
+*.sdc
+*.sdf
+*.mapped.v
+*.svf
+
+# Build directories
+build*/
+*-syn/
+*-par/
+
+# OS
+.DS_Store

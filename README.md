@@ -9,3 +9,8 @@
 # smrtl | Let there be RTL
 
 ---
+
+## Components
+
+### [max/](max/)
+Matrix multiply accelerators. Multiple variants for different use cases.
