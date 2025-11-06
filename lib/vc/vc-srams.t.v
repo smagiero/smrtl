@@ -1,7 +1,13 @@
 //========================================================================
 // vc-srams Unit Tests
 //========================================================================
-
+// Sebastian Feb 27, 2024
+/*
+*** COMPILE *** (e.g., from sim24/build directory):
+../scripts/warnings2errors iverilog -s top -g2012 -Wall -Wno-sensitivity-entire-vector -Wno-sensitivity-entire-array -o vc-sram-test -I ../vc ../vc/vc-srams.t.v
+./vc-sram-test +verbose=1 +trace=1 +test-case=1
+./vc-sram-test +verbose=1 +trace=1 +test-case=2
+*/
 `include "vc-srams.v"
 `include "vc-test.v"
 

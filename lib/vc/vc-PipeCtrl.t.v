@@ -2,6 +2,20 @@
 // Unit Tests for Pipe Control
 //========================================================================
 
+
+
+/*
+*** COMPILE *** (e.g., from sim24/build directory):
+../scripts/warnings2errors iverilog -s top -g2012 -Wall -Wno-sensitivity-entire-vector -Wno-sensitivity-entire-array -o vc-pipectrl-test -I ../vc ../vc/vc-PipeCtrl.t.v
+./vc-pipectrl-test +verbose=1 +trace=1 +test-case=1
+
+to get a waveform
+./vc-pipectrl-test +dump-vcd
+
+to see waveform
+open -a gtkwave vc-pipectrl-test.vcd
+*/
+
 `include "vc-PipeCtrl.v"
 `include "vc-regs.v"
 `include "vc-TestRandDelaySource.v"

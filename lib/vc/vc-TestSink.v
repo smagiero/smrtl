@@ -127,8 +127,10 @@ module vc_TestSink
                          "msg", m[index], msg );
           default : begin
             failed = 1;
-            $display( "     [ FAILED ] %s, expected = %x, actual = %x",
-                      "msg", m[index], msg );
+            // $display( "     [ FAILED ] %s, expected = %x, actual = %x", // SEBASTIAN %d was %x
+            //           "msg", m[index], msg );
+            $display( "     [ FAILED ] %s, expected = %3d %3d %3d %3d, actual = %3d %3d %3d %3d", // SEBASTIAN NEW FOR DecPipe.v
+                      "msg", m[index][63:48], m[index][47:32],m[index][31:16],m[index][15:0], msg[63:48],msg[47:32],msg[31:16],msg[15:0] );
           end
         endcase
 
@@ -169,7 +171,7 @@ module vc_TestSink
 
   `VC_TRACE_BEGIN
   begin
-    $sformat( msg_str, "%x", msg );
+    $sformat( msg_str, "%d", msg );
     vc_trace.append_val_rdy_str( trace_str, val, rdy, msg_str );
   end
   `VC_TRACE_END

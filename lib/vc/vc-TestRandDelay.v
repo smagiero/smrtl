@@ -28,12 +28,12 @@ module vc_TestRandDelay
   // Input interface
 
   input                    in_val,
-  output                   in_rdy,
+  output logic             in_rdy, // Sebastian Fri Jul 06 2024 added logic (commented out reg in_rdy below)
   input [p_msg_nbits-1:0]  in_msg,
 
   // Output interface
 
-  output                   out_val,
+  output logic             out_val, // Sebastian Fri Jul 06 2024 added logic (commented out reg out_val below)
   input                    out_rdy,
   output [p_msg_nbits-1:0] out_msg
 );
@@ -137,8 +137,8 @@ module vc_TestRandDelay
   // State output
   //----------------------------------------------------------------------
 
-  reg in_rdy;
-  reg out_val;
+  // reg in_rdy; Sebastian Fri Sep 06 2024 (comment out)
+  // reg out_val; Sebastian Fri Sep 06 2024 (comment out)
 
   always @(*) begin
 
