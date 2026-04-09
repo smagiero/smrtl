@@ -270,8 +270,8 @@ module top;
   logic  [31:0] th_sink_max_delay;
   logic  [31:0] th_inst_asm_str;   // instr binary derived from str
   logic  [31:0] th_addr;
-  logic  [31:0] th_src_idx;
-  logic  [31:0] th_sink_idx;
+  logic  [31:0] th_src_idx;        // index of th.src.src.m, where to put stuff in src
+  logic  [31:0] th_sink_idx;       // index of th.sink.sink.m, where to put stuff in sink
   logic         th_done;
 
   // assign th_addr = 0;

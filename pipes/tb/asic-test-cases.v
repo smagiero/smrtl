@@ -74,7 +74,7 @@ begin
   ubmark_dest_size = c_M_size;
 
   address( ev_addrs ); // set test harness address
-  data( 64'd30 );       // put data in current address and increment address
+  data( 64'd30 );      // put data in memory at current addr and increment addr
   data( 64'd1 );
   data( 64'd2 );
   data( 64'd3 );
@@ -146,6 +146,7 @@ end
 begin
   init_rand_delays( 0, 0, 0 );
   init_2vecs_asm;
+  // setup-time diagnostic prints to screen 
   $write("W[0,0]=%x\n", th.mem.mem.m[ pt_addrs   >>3]);
   $write("W[0,1]=%x\n", th.mem.mem.m[(pt_addrs+8)>>3]);
   $write("x[0]  =%x\n", th.mem.mem.m[ st_addrs   >>3]);
