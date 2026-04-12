@@ -113,20 +113,20 @@ module TestHarness#(
     .reset          ( reset        ),
 
     // Control path
-    .ctrl_src_val_i ( ctrl_src_val ),
-    .ctrl_src_rdy_o ( ctrl_src_rdy ),
-    .ctrl_src_msg_i ( ctrl_src_msg ),
-    .ctrl_snk_val_o ( ctrl_snk_val ),
-    .ctrl_snk_rdy_i ( ctrl_snk_rdy ),
-    .ctrl_snk_msg_o ( ctrl_snk_msg ),
+    .ctrl_src_val_i ( ctrl_src_val ), // src_val --v--> ASIC
+    .ctrl_src_rdy_o ( ctrl_src_rdy ), // src_rdy <--r-- ASIC
+    .ctrl_src_msg_i ( ctrl_src_msg ), // src_msg -----> ASIC
+    .ctrl_snk_val_o ( ctrl_snk_val ), //                ASIC --v--> snk_val
+    .ctrl_snk_rdy_i ( ctrl_snk_rdy ), //                ASIC <--r-- snk_rdy
+    .ctrl_snk_msg_o ( ctrl_snk_msg ), //                ASIC -----> snk_msg
 
     // Data path
-    .data_src_val_i ( data_src_val ),
-    .data_src_rdy_o ( data_src_rdy ),
-    .data_src_msg_i ( data_src_msg ),
-    .data_snk_val_o ( data_snk_val ),
-    .data_snk_rdy_i ( data_snk_rdy ),
-    .data_snk_msg_o ( data_snk_msg ),
+    .data_src_val_i ( data_src_val ), // src_val --v--> ASIC
+    .data_src_rdy_o ( data_src_rdy ), // src_rdy <--r-- ASIC
+    .data_src_msg_i ( data_src_msg ), // src_msg -----> ASIC
+    .data_snk_val_o ( data_snk_val ), //                ASIC --v--> snk_val
+    .data_snk_rdy_i ( data_snk_rdy ), //                ASIC <--r-- snk_rdy
+    .data_snk_msg_o ( data_snk_msg ), //                ASIC -----> snk_msg
 
   );
 
