@@ -13,7 +13,7 @@
   `ifdef BUS_B
     `define ASIC_CTRL_MSG_NBITS `BUS_B
   `else
-    `define ASIC_CTRL_MSG_NBITS 64
+    `define ASIC_CTRL_MSG_NBITS 32
   `endif
 `endif
 
@@ -126,7 +126,7 @@ module TestHarness#(
     .data_src_msg_i ( data_src_msg ), // src_msg -----> ASIC
     .data_snk_val_o ( data_snk_val ), //                ASIC --v--> snk_val
     .data_snk_rdy_i ( data_snk_rdy ), //                ASIC <--r-- snk_rdy
-    .data_snk_msg_o ( data_snk_msg ), //                ASIC -----> snk_msg
+    .data_snk_msg_o ( data_snk_msg )  //                ASIC -----> snk_msg
 
   );
 
