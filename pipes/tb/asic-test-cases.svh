@@ -12,19 +12,20 @@ send a data sequence (of known length) to DUT
 // Basic tests
 //------------------------------------------------------------------------
 
+localparam [31:0] c_num_pipe_stages = 32'd1;
+localparam [31:0] c_num_test_vecs   = 32'd3;
+
+task pipevecs_1_3;
+begin
+  `include "generated/pipevecs_1_3.svh"
+end
+endtask
+
 task input_program;
 begin
   init_ctrl_src( 32'h0000_0000 ); // start word
-  init_ctrl_src( 32'h0000_0003 ); // number of inputs to process
+  init_ctrl_src( c_num_test_vecs ); // number of inputs to process
   init_ctrl_snk( 32'h0000_0001 ); // what the sink expects to see
-
-  init_data_src( 64'h0000_0000_0000_0011 );
-  init_data_src( 64'h0000_0000_0000_0022 );
-  init_data_src( 64'h0000_0000_0000_0033 );
-
-  init_data_snk( 64'h0000_0000_0000_0012 );
-  init_data_snk( 64'h0000_0000_0000_0023 );
-  init_data_snk( 64'h0000_0000_0000_0034 );
 end
 endtask
 
@@ -37,6 +38,7 @@ begin
   clear_streams();
   init_rand_delays( 0, 0, 0, 0 ); // no random delays
   input_program();
+  pipevecs_1_3();
   run_test();
 end
 `VC_TEST_CASE_END

@@ -13,13 +13,21 @@ PROC_DIR := ../../lib/proc
 INCLUDES := -I $(VC_DIR) -I $(SM_DIR) -I $(PROC_DIR) -I ../rtl -I .
 SRC_TOP  := asic.t.v
 RUN_ARGS ?= +test-case=1
+GEN_DIR  := generated
+PIPEVECS := $(GEN_DIR)/pipevecs_1_3.svh
 
 all: run
 
 $(EXE_DIR):
 	mkdir -p $(EXE_DIR)
 
-build: $(EXE_DIR)
+$(GEN_DIR):
+	mkdir -p $(GEN_DIR)
+
+$(PIPEVECS): gen_pipevecs.py | $(GEN_DIR)
+	python3 gen_pipevecs.py --stages 1 --count 3 --output $(PIPEVECS)
+
+build: $(EXE_DIR) $(PIPEVECS)
 ifeq ($(SIM),iverilog)
 	@iverilog -g2012 \
 	  -Wall -Wno-sensitivity-entire-vector -Wno-sensitivity-entire-array \
@@ -32,7 +40,9 @@ else
 	exit 1
 endif
 
-.PHONY: run runv trace debug build clean
+.PHONY: run runv trace debug build generate clean
+
+generate: $(PIPEVECS)
 
 run: build
 	$(EXE) $(RUN_ARGS)
@@ -48,3 +58,4 @@ debug: build
 
 clean:
 	rm -f $(EXE_DIR)/asic-exe $(EXE_DIR)/*.vcd
+	rm -rf $(GEN_DIR)

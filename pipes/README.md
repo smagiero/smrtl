@@ -40,6 +40,8 @@ data_src|<---data_src_rdy-----|      |<-----data_snk_rdy-----|data_snk
 ### Using Makefile
 In `pipes/tb`
 ```bash
+# make test vectors
+% make generate
 # quiet default
 % make run
 # adds +verbose=1

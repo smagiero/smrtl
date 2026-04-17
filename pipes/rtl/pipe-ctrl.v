@@ -113,22 +113,22 @@ module pipe_ctrl
 
   `VC_TRACE_BEGIN
   begin
-    if ( state_reg == STATE_IDLE && ctrl_src_go ) begin
-      vc_trace.append_str( trace_str, "start" );
+    if ( state_reg == STATE_IDLE && ctrl_src_go ) begin  // got a program
+      vc_trace.append_str( trace_str, "start\t" );
     end
     else if ( state_reg == STATE_LOAD_COUNT && ctrl_src_go ) begin
-      $sformat( state_str, "cnt:%x", ctrl_src_msg_i[15:0] );
+      $sformat( state_str, "cnt:%x\t", ctrl_src_msg_i[15:0] );
       vc_trace.append_str( trace_str, state_str );
     end
     else if ( state_reg == STATE_RUN ) begin
-      $sformat( state_str, "run:%x", num_inputs_reg[15:0] );
+      $sformat( state_str, "run:%x\t", num_inputs_reg[15:0] );
       vc_trace.append_str( trace_str, state_str );
     end
     else if ( state_reg == STATE_RESP ) begin
-      vc_trace.append_str( trace_str, "done" );
+      vc_trace.append_str( trace_str, "done\t" );
     end
-    else begin
-      $sformat( state_str, "i:%x", last_cmd[15:0] );
+    else begin // STATE_IDLE
+      $sformat( state_str, "i:%x\t", last_cmd[15:0] ); 
       vc_trace.append_str( trace_str, state_str );
     end
   end
