@@ -14,7 +14,10 @@ INCLUDES := -I $(VC_DIR) -I $(SM_DIR) -I $(PROC_DIR) -I ../rtl -I .
 SRC_TOP  := asic.t.v
 RUN_ARGS ?= +test-case=1
 GEN_DIR  := generated
-PIPEVECS := $(GEN_DIR)/pipevecs_1_3.svh
+PIPE_STAGES ?= 1
+PIPE_COUNT  ?= 3
+PIPEVECS := $(GEN_DIR)/pipevecs_$(PIPE_STAGES)_$(PIPE_COUNT).svh
+PIPEVECS_ACTIVE := $(GEN_DIR)/current_pipevecs.svh
 
 all: run
 
@@ -25,7 +28,8 @@ $(GEN_DIR):
 	mkdir -p $(GEN_DIR)
 
 $(PIPEVECS): gen_pipevecs.py | $(GEN_DIR)
-	python3 gen_pipevecs.py --stages 1 --count 3 --output $(PIPEVECS)
+	python3 gen_pipevecs.py --stages $(PIPE_STAGES) --count $(PIPE_COUNT) --output $(PIPEVECS)
+	cp $(PIPEVECS) $(PIPEVECS_ACTIVE)
 
 build: $(EXE_DIR) $(PIPEVECS)
 ifeq ($(SIM),iverilog)
@@ -40,9 +44,9 @@ else
 	exit 1
 endif
 
-.PHONY: run runv trace debug build generate clean
+.PHONY: run runv trace debug build gen clean
 
-generate: $(PIPEVECS)
+gen: $(PIPEVECS)
 
 run: build
 	$(EXE) $(RUN_ARGS)

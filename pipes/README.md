@@ -40,8 +40,10 @@ data_src|<---data_src_rdy-----|      |<-----data_snk_rdy-----|data_snk
 ### Using Makefile
 In `pipes/tb`
 ```bash
-# make test vectors
-% make generate
+# make test vectors (default is one stage and three vectors)
+% make gen
+# but you can vary it
+% make gen PIPE_STAGES=2 PIPE_COUNT=5
 # quiet default
 % make run
 # adds +verbose=1

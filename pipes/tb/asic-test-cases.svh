@@ -17,7 +17,7 @@ localparam [31:0] c_num_test_vecs   = 32'd3;
 
 task pipevecs_1_3;
 begin
-  `include "generated/pipevecs_1_3.svh"
+  `include "generated/current_pipevecs.svh"
 end
 endtask
 
