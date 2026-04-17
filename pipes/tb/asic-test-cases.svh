@@ -22,9 +22,9 @@ begin
   init_data_src( 64'h0000_0000_0000_0022 );
   init_data_src( 64'h0000_0000_0000_0033 );
 
-  init_data_snk( 64'h0000_0000_0000_0011 );
-  init_data_snk( 64'h0000_0000_0000_0022 );
-  init_data_snk( 64'h0000_0000_0000_0033 );
+  init_data_snk( 64'h0000_0000_0000_0012 );
+  init_data_snk( 64'h0000_0000_0000_0023 );
+  init_data_snk( 64'h0000_0000_0000_0034 );
 end
 endtask
 

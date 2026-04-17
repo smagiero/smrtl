@@ -6,6 +6,7 @@
 `ifndef PIPE_DATA_V
 `define PIPE_DATA_V
 
+`include "pipe-stage.v"
 `include "vc-trace.v"
 
 module pipe_data
@@ -26,16 +27,41 @@ module pipe_data
   output logic [63:0] data_snk_msg_o
 );
 
-  logic        running_reg;
-  logic [31:0] retired_outputs_reg;
-  logic        data_go;
+  localparam [31:0] c_num_stages = 32'd1;
 
-  assign data_go       = data_snk_val_o && data_snk_rdy_i;
-  assign data_src_rdy_o = running_reg && data_snk_rdy_i;
-  assign data_snk_val_o = running_reg && data_src_val_i;
-  assign data_snk_msg_o = data_src_msg_i;
-  assign pipe_done_o    =
-    running_reg && data_go && ( retired_outputs_reg + 32'd1 == num_inputs_i );
+  logic        running_reg; // is pipe running (i.e., has it been started and not yet completed)?
+  logic [31:0] retired_outputs_reg; // how many outputs succesfully pumpd out of pipe
+  logic        data_go;
+  logic        stage_in_val;
+  logic        stage_in_rdy;
+  logic [63:0] stage_in_msg;
+  logic        stage_out_val;
+  logic [63:0] stage_out_msg;
+
+  assign stage_in_val   = running_reg && data_src_val_i;
+  assign stage_in_msg   = data_src_msg_i;
+  assign data_go        = data_snk_val_o && data_snk_rdy_i;
+  assign data_src_rdy_o = running_reg && stage_in_rdy;
+  assign data_snk_val_o = stage_out_val;
+  assign data_snk_msg_o = stage_out_msg;
+  assign pipe_done_o    = running_reg && data_go && ( retired_outputs_reg + 32'd1 == num_inputs_i );
+
+  pipe_stage
+  #(
+    .p_data_nbits ( 64    ),
+    .p_addend     ( 64'd1 )
+  )
+  stage0
+  (
+    .clk       ( clk          ),
+    .reset     ( reset        ),
+    .in_val_i  ( stage_in_val ),
+    .in_rdy_o  ( stage_in_rdy ),
+    .in_msg_i  ( stage_in_msg ),
+    .out_val_o ( stage_out_val ),
+    .out_rdy_i ( data_snk_rdy_i ),
+    .out_msg_o ( stage_out_msg )
+  );
 
   always @( posedge clk ) begin
     if ( reset ) begin
@@ -65,8 +91,9 @@ module pipe_data
 
   `VC_TRACE_BEGIN
   begin
-    $sformat( state_str, "r:%x/%x", retired_outputs_reg[7:0], num_inputs_i[7:0] );
+    $sformat( state_str, "r:%x/%x n:%x ", retired_outputs_reg[7:0], num_inputs_i[7:0], c_num_stages[7:0] );
     vc_trace.append_str( trace_str, state_str );
+    stage0.trace( trace_str );
   end
   `VC_TRACE_END
 
