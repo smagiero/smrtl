@@ -7,6 +7,7 @@
 `define PIPE01_V
 
 `include "pipe-ctrl.v"
+`include "pipe-data.v"
 `include "vc-trace.v"
 
 module pipe01
@@ -35,16 +36,6 @@ module pipe01
   logic [31:0] num_inputs;
   logic        pipe_done;
 
-  logic        running_reg;
-  logic [31:0] retired_outputs_reg;
-
-  wire data_go = data_snk_val_o && data_snk_rdy_i;
-
-  assign data_src_rdy_o = running_reg && data_snk_rdy_i;
-  assign data_snk_val_o = running_reg && data_src_val_i;
-  assign data_snk_msg_o = data_src_msg_i;
-  assign pipe_done      = running_reg && data_go && ( retired_outputs_reg + 32'd1 == num_inputs );
-
   pipe_ctrl ctrl
   (
     .clk            (clk),
@@ -63,36 +54,33 @@ module pipe01
     .pipe_done_i    (pipe_done)
   );
 
-  always @( posedge clk ) begin
-    if ( reset ) begin
-      running_reg         <= 1'b0;
-      retired_outputs_reg <= 32'b0;
-    end
-    else begin
-      if ( pipe_start ) begin
-        running_reg         <= 1'b1;
-        retired_outputs_reg <= 32'b0;
-      end
-      else if ( pipe_done ) begin
-        running_reg         <= 1'b0;
-        retired_outputs_reg <= retired_outputs_reg + 32'd1;
-      end
-      else if ( data_go ) begin
-        retired_outputs_reg <= retired_outputs_reg + 32'd1;
-      end
-    end
-  end
+  pipe_data data
+  (
+    .clk            (clk),
+    .reset          (reset),
+
+    .pipe_start_i   (pipe_start),
+    .num_inputs_i   (num_inputs),
+    .pipe_done_o    (pipe_done),
+
+    .data_src_val_i (data_src_val_i),
+    .data_src_rdy_o (data_src_rdy_o),
+    .data_src_msg_i (data_src_msg_i),
+
+    .data_snk_val_o (data_snk_val_o),
+    .data_snk_rdy_i (data_snk_rdy_i),
+    .data_snk_msg_o (data_snk_msg_o)
+  );
 
   //----------------------------------------------------------------------
   // Line Tracing
   //----------------------------------------------------------------------
-  logic [95:0] state_str;
 
   `VC_TRACE_BEGIN
   begin
     ctrl.trace( trace_str );
-    $sformat( state_str, " r:%x/%x\t", retired_outputs_reg[7:0], num_inputs[7:0] );
-    vc_trace.append_str( trace_str, state_str );
+    vc_trace.append_str( trace_str, " " );
+    data.trace( trace_str );
   end
   `VC_TRACE_END
 

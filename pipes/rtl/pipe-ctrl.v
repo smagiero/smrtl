@@ -41,8 +41,8 @@ module pipe_ctrl
     STATE_RESP
   } state_t;
 
-  state_t       state_reg;
-  state_t       state_next;
+  state_t      state_reg;
+  state_t      state_next;
   logic [31:0] last_cmd;
   logic [31:0] num_inputs_reg;
   logic        ctrl_src_go;
