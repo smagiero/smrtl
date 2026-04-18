@@ -29,12 +29,17 @@ $(GEN_DIR):
 
 $(PIPEVECS): gen_pipevecs.py | $(GEN_DIR)
 	python3 gen_pipevecs.py --stages $(PIPE_STAGES) --count $(PIPE_COUNT) --output $(PIPEVECS)
+
+.PHONY: sync-current
+
+sync-current: $(PIPEVECS)
 	cp $(PIPEVECS) $(PIPEVECS_CURRENT)
 
-build: $(EXE_DIR) $(PIPEVECS)
+build: $(EXE_DIR) sync-current
 ifeq ($(SIM),iverilog)
 	@iverilog -g2012 \
 	  -Wall -Wno-sensitivity-entire-vector -Wno-sensitivity-entire-array \
+	  -DASIC_IMPL_NUM_STAGES=$(PIPE_STAGES) \
 	  $(INCLUDES) \
 	  -s $(TOP) \
 	  -o $(EXE) \
@@ -46,7 +51,7 @@ endif
 
 .PHONY: run runv trace debug build gen clean
 
-gen: $(PIPEVECS)
+gen: sync-current
 
 run: build
 	$(EXE) $(RUN_ARGS)

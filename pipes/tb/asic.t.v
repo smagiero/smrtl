@@ -9,6 +9,9 @@
 
 `define ASIC_IMPL             pipe01              // ASIC module name
 `define ASIC_IMPL_STR         "pipe01"            // ASIC module name string for macro digest
+`ifndef ASIC_IMPL_NUM_STAGES
+`define ASIC_IMPL_NUM_STAGES  2
+`endif
 `define ASIC_TEST_CASES_FILE  "asic-test-cases.svh"
 `define ASIC_CTRL_MSG_NBITS   32
 `define ASIC_DATA_MSG_NBITS   64

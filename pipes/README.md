@@ -44,14 +44,14 @@ In `pipes/tb`
 % make gen
 # but you can vary it
 % make gen PIPE_STAGES=2 PIPE_COUNT=5
-# quiet default
+# quiet default, it also generates the test vectors
 % make run
 # maybe you want to try different test cases
 % make run RUN_ARGS='+test-case=1'
 # or try all test cases
 % make run RUN_ARGS='+test-case'
-# or even simpler, run all test cases with
-% make run RUN_ARGS=
+# or even simpler, run all test cases with (e.g., with some pipe settings)
+% make run PIPE_STAGES=3 PIPE_COUNT=4 RUN_ARGS=
 # adds +verbose=1
 % make runv
 # adds +trace=1

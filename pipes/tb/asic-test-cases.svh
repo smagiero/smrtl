@@ -22,7 +22,7 @@ endtask
 // Test Case:
 //------------------------------------------------------------------------
 
-`VC_TEST_CASE_BEGIN( 1, "2-stage pipe, no random delays" ) // +test_case=1
+`VC_TEST_CASE_BEGIN( 1, "pipe, no random delays" ) // +test_case=1
 begin
   clear_streams();
   init_rand_delays( 0, 0, 0, 0 ); // no random delays
@@ -31,7 +31,7 @@ begin
 end
 `VC_TEST_CASE_END
 
-`VC_TEST_CASE_BEGIN( 2, "2-stage pipe, control path random delays" ) // +test_case=2
+`VC_TEST_CASE_BEGIN( 2, "pipe, control path random delays" ) // +test_case=2
 begin
   clear_streams();
   init_rand_delays( 4, 4, 0, 0 );
@@ -40,7 +40,7 @@ begin
 end
 `VC_TEST_CASE_END
 
-`VC_TEST_CASE_BEGIN( 3, "2-stage pipe, data path random delays" ) // +test_case=3
+`VC_TEST_CASE_BEGIN( 3, "pipe, data path random delays" ) // +test_case=3
 begin
   clear_streams();
   init_rand_delays( 0, 0, 4, 4 );
@@ -49,7 +49,7 @@ begin
 end
 `VC_TEST_CASE_END
 
-`VC_TEST_CASE_BEGIN( 4, "2-stage pipe, all paths random delays" ) // +test_case=4
+`VC_TEST_CASE_BEGIN( 4, "pipe, all paths random delays" ) // +test_case=4
 begin
   clear_streams();
   init_rand_delays( 4, 4, 4, 4 );

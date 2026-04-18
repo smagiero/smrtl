@@ -107,7 +107,10 @@ module TestHarness#(
   // ASIC
   //----------------------------------------------------------------------
 
-  `ASIC_IMPL asic
+  `ASIC_IMPL#(
+    .p_num_stages ( `ASIC_IMPL_NUM_STAGES )
+  )
+  asic
   (
     .clk            ( clk          ),
     .reset          ( reset        ),
