@@ -7,7 +7,9 @@
 `define PIPE_DATA_V
 
 `include "pipe-stage.v"
+`ifndef SYNTHESIS
 `include "vc-trace.v"
+`endif
 
 module pipe_data
 #(
@@ -88,6 +90,7 @@ module pipe_data
     end
   end
 
+`ifndef SYNTHESIS
   //----------------------------------------------------------------------
   // Line Tracing
   //----------------------------------------------------------------------
@@ -115,6 +118,7 @@ module pipe_data
     end
   end
   `VC_TRACE_END
+`endif
 
 endmodule
 

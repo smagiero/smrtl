@@ -14,7 +14,9 @@
 `ifndef PIPE_CTRL_V
 `define PIPE_CTRL_V
 
+`ifndef SYNTHESIS
 `include "vc-trace.v"
+`endif
 
 module pipe_ctrl
 (
@@ -106,6 +108,7 @@ module pipe_ctrl
     end
   end
 
+`ifndef SYNTHESIS
   //----------------------------------------------------------------------
   // Line Tracing
   //----------------------------------------------------------------------
@@ -133,6 +136,7 @@ module pipe_ctrl
     end
   end
   `VC_TRACE_END
+`endif
 
 endmodule
 

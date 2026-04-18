@@ -8,7 +8,9 @@
 
 `include "pipe-ctrl.v"
 `include "pipe-data.v"
+`ifndef SYNTHESIS
 `include "vc-trace.v"
+`endif
 
 module pipe01
 (
@@ -77,6 +79,7 @@ module pipe01
     .data_snk_msg_o (data_snk_msg_o)
   );
 
+`ifndef SYNTHESIS
   //----------------------------------------------------------------------
   // Line Tracing
   //----------------------------------------------------------------------
@@ -88,6 +91,7 @@ module pipe01
     data.trace( trace_str );
   end
   `VC_TRACE_END
+`endif
 
 endmodule
 

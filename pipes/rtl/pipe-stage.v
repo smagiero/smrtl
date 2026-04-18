@@ -6,7 +6,9 @@
 `ifndef PIPE_STAGE_V
 `define PIPE_STAGE_V
 
+`ifndef SYNTHESIS
 `include "vc-trace.v"
+`endif
 
 module pipe_stage
 #(
@@ -46,6 +48,7 @@ module pipe_stage
     end
   end
 
+`ifndef SYNTHESIS
   //----------------------------------------------------------------------
   // Line Tracing
   //----------------------------------------------------------------------
@@ -61,6 +64,7 @@ module pipe_stage
     vc_trace.append_str( trace_str, state_str );
   end
   `VC_TRACE_END
+`endif
 
 endmodule
 
