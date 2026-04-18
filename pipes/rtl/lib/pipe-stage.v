@@ -2,6 +2,22 @@
 // pipes/rtl/pipe-stage.v
 //========================================================================
 // Sebastian Claudiusz Magierowski Apr 17 2026
+/*
+  This is a single stage of a simple pipelined datapath. val/rdy handshakes move messages through stages.
+  The message format is: { data } where the data bits are used to carry the payload data.
+  Notes:
+    val_reg says whether the register will hold a valid item after the clock edge.
+      So on an advance cycle:
+      - val_reg <= in_val_i
+      - if in_val_i is 1, then msg_reg <= in_msg_i
+      - if in_val_i is 0, then val_reg becomes 0, and msg_reg is irrelevant because the
+        register is now invalid
+      So msg_reg is only updated when the next state of val_reg will be valid.
+      That is why it feels like it is “anticipating” val_reg: both are being loaded for
+      the same next-cycle state.  This is the usual elastic-register pattern:
+      - val_reg tells you whether contents are meaningful
+      - msg_reg only needs updating when meaningful contents are entering
+*/
 
 `ifndef PIPE_STAGE_V
 `define PIPE_STAGE_V
