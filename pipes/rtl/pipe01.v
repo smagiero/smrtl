@@ -36,6 +36,8 @@ module pipe01
   logic [31:0] num_inputs;
   logic        pipe_done;
 
+  localparam c_num_stages = 2; // number of stages in pipe (not counting src and snk)
+
   pipe_ctrl ctrl
   (
     .clk            (clk),
@@ -54,7 +56,10 @@ module pipe01
     .pipe_done_i    (pipe_done)
   );
 
-  pipe_data data
+  pipe_data#(
+    .p_num_stages ( c_num_stages )
+  )
+  data
   (
     .clk            (clk),
     .reset          (reset),
